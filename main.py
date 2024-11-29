@@ -32,6 +32,7 @@ for path in paths:
     pdf.cell(w=30, h=8, txt=columns[3], border=1)
     pdf.cell(w=30, h=8, txt=columns[4], border=1, ln=1)
 
+    total_sum = 0
     
     for index, row in df.iterrows(): 
         pdf.set_font(family="Times", size=10)
@@ -41,6 +42,23 @@ for path in paths:
         pdf.cell(w=40, h=8, txt=str(row["amount_purchased"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["price_per_unit"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["total_price"]), border=1, ln=1)
+
+        total_sum = total_sum + row["total_price"]
+
+    pdf.set_font(family="Times", size=10)
+    pdf.set_text_color(80, 80, 80)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=60, h=8, txt="", border=1)
+    pdf.cell(w=40, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt=str(total_sum), border=1, ln=1)
+
+    pdf.set_font(family="Times", size=10)
+    pdf.cell(w=30, h=8, txt=f"The total due amount is {total_sum} Euros", ln=1)
+
+    pdf.set_font(family="Times", size=14)
+    pdf.cell(w=24, h=8, txt="PythonHow")
+    pdf.image("pythonhow.png", w=10)
 
     pdf.output(f"PDFs/{filename}.pdf")
     
